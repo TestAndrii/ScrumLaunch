@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +22,6 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+Route::resource('/post', PostController::class);
+Route::resource('/comment', CommentController::class)->except(['create']);
+Route::post('/comment/create/{post}', [CommentController::class, 'create'])->name('comment.create');
